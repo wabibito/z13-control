@@ -17,21 +17,23 @@ if command -v apt-get >/dev/null; then
     EXT=deb
 elif command -v dnf >/dev/null; then
     EXT=rpm
+elif command -v pacman >/dev/null; then
+    EXT=pkg.tar.zst          # Arch, CachyOS, EndeavourOS, Manjaro
 else
-    die "no supported package manager found (apt or dnf)"
+    die "no supported package manager found (apt, dnf or pacman)"
 fi
 
 # An existing install is upgraded in place; settings and saved profiles are kept.
 CURRENT=""
-if [ "$EXT" = deb ]; then
-    CURRENT=$(dpkg-query -W -f='${Version}' z13-control 2>/dev/null || true)
-else
-    CURRENT=$(rpm -q --qf '%{VERSION}' z13-control 2>/dev/null || true)
-fi
+case "$EXT" in
+    deb) CURRENT=$(dpkg-query -W -f='${Version}' z13-control 2>/dev/null || true) ;;
+    rpm) CURRENT=$(rpm -q --qf '%{VERSION}' z13-control 2>/dev/null || true) ;;
+    *)   CURRENT=$(pacman -Q z13-control 2>/dev/null | awk '{sub(/-[0-9]+$/, "", $2); print $2}') ;;
+esac
 
 say "Finding the latest release…"
 RELEASE=$(curl -fsSL "$API")
-URL=$(printf '%s' "$RELEASE" | grep -o "https://[^\"]*\.$EXT" | head -1)
+URL=$(printf '%s' "$RELEASE" | grep -o "https://[^\"]*\.$EXT\"" | tr -d '"' | head -1)
 LATEST=$(printf '%s' "$RELEASE" | sed -n 's/.*"tag_name": *"v\{0,1\}\([^"]*\)".*/\1/p' | head -1)
 [ -n "$URL" ] || die "no .$EXT package in the latest release"
 if [ -n "$CURRENT" ]; then
@@ -55,11 +57,11 @@ fi
 
 say "Installing (you may be asked for your password)…"
 # Upgrade, reinstall or downgrade, whichever this file turns out to be.
-if [ "$EXT" = deb ]; then
-    $RUN apt-get install -y --reinstall --allow-downgrades "$FILE"
-else
-    $RUN dnf install -y --allowerasing "$FILE" || $RUN dnf reinstall -y "$FILE"
-fi
+case "$EXT" in
+    deb) $RUN apt-get install -y --reinstall --allow-downgrades "$FILE" ;;
+    rpm) $RUN dnf install -y --allowerasing "$FILE" || $RUN dnf reinstall -y "$FILE" ;;
+    *)   $RUN pacman -U --noconfirm "$FILE" ;;
+esac
 
 say "Done. Open “Z13 Control” from your apps, or run: z13 status"
 say "Later updates: System → Updates in the app, or: z13 update"

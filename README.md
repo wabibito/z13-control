@@ -12,19 +12,21 @@ privileges so nothing else has to.
 
 ## Install
 
-One line, on Ubuntu 24.04+ or Fedora 42+ (GNOME or KDE Plasma 6):
+One line, on Ubuntu 24.04+, Fedora 42+, or Arch-based systems such as
+CachyOS (GNOME or KDE Plasma 6):
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/wabibito/z13-control/main/install.sh | sh
 ```
 
 It picks the right package for your system, asks for your password once, and
-starts the service. Or download the `.deb` (Ubuntu/Debian) or `.rpm`
-(Fedora/RHEL) from [Releases](../../releases) and install it by hand:
+starts the service. Or download the package from [Releases](../../releases)
+and install it by hand:
 
 ```sh
-sudo apt install ./z13-control_*_all.deb     # Ubuntu / Debian
-sudo dnf install ./z13-control-*.noarch.rpm  # Fedora / RHEL
+sudo apt install ./z13-control_*_all.deb              # Ubuntu / Debian
+sudo dnf install ./z13-control-*.noarch.rpm           # Fedora / RHEL
+sudo pacman -U ./z13-control-*-any.pkg.tar.zst        # Arch / CachyOS / EndeavourOS
 ```
 
 **Log out and back in once after installing.** GNOME only picks up the top-bar
@@ -134,7 +136,8 @@ after resume.
 ## Requirements
 
 * 2025 ROG Flow Z13 (GZ302E)
-* Ubuntu 24.04+ or Fedora 42+ with GNOME or KDE Plasma 6 (Wayland or X11)
+* Ubuntu 24.04+, Fedora 42+ or an Arch-based distribution (CachyOS,
+  EndeavourOS, Manjaro), with GNOME or KDE Plasma 6 (Wayland or X11)
 * Linux 6.11+ for fan curves and power limits; 6.19+ reports the per-model
   power range this app uses
 
@@ -143,6 +146,7 @@ after resume.
 ```sh
 sudo apt remove z13-control     # Ubuntu / Debian
 sudo dnf remove z13-control     # Fedora / RHEL
+sudo pacman -R z13-control      # Arch / CachyOS
 ```
 
 Saved profiles stay in `/var/lib/z13-control`.
