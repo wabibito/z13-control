@@ -4,14 +4,15 @@ Hardware control for the **2025 ASUS ROG Flow Z13** (GZ302E) on Linux: power
 profiles, APU power limits, fan curves, keyboard and lightbar RGB, battery
 charge limit, live monitoring and firmware toggles.
 
-A GNOME app, a top-bar menu and a `z13` command-line tool, all talking to a
-small system service that holds the privileges so nothing else has to.
+An app, a panel menu for **GNOME** and **KDE Plasma**, and a `z13`
+command-line tool, all talking to a small system service that holds the
+privileges so nothing else has to.
 
 ![Overview](docs/screenshots/01-overview.png)
 
 ## Install
 
-One line, on Ubuntu 24.04+ or Fedora 42+ (GNOME):
+One line, on Ubuntu 24.04+ or Fedora 42+ (GNOME or KDE Plasma 6):
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/wabibito/z13-control/main/install.sh | sh
@@ -27,7 +28,8 @@ sudo dnf install ./z13-control-*.noarch.rpm  # Fedora / RHEL
 ```
 
 **Log out and back in once after installing.** GNOME only picks up the top-bar
-menu at login; the app enables it for you.
+menu at login; the app enables it for you. On KDE Plasma the app adds its
+widget to your panel the first time it starts.
 
 ## What it does
 
@@ -44,6 +46,15 @@ the app, because the service records it continuously.
 Temperature in the top bar, and one click away: live readings, power profiles,
 power limits and fan presets, lighting, battery limit, auto-switch, alerts and
 the panel refresh rate — without opening the app.
+
+### KDE Plasma panel widget
+
+![Plasma widget](docs/screenshots/08-plasma-widget.png)
+
+The same quick controls as a Plasma 6 widget, following your Plasma theme.
+It is placed on your panel automatically; right-click the panel → *Add
+Widgets* → *Z13 Control* to add it again after removing it. Refresh-rate
+switching uses KScreen on Plasma.
 
 ### Profiles and power limits
 
@@ -123,7 +134,7 @@ after resume.
 ## Requirements
 
 * 2025 ROG Flow Z13 (GZ302E)
-* Ubuntu 24.04+ or Fedora 42+ with GNOME (Wayland or X11)
+* Ubuntu 24.04+ or Fedora 42+ with GNOME or KDE Plasma 6 (Wayland or X11)
 * Linux 6.11+ for fan curves and power limits; 6.19+ reports the per-model
   power range this app uses
 
