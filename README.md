@@ -89,9 +89,10 @@ drawn in orange: your points are raised to it, never lowered.
 ![Lighting](docs/screenshots/04-lighting.png)
 
 Keyboard and lightbar, together or separately: static, breathe, colour cycle,
-rainbow or strobe, with colour, speed and brightness, and a live preview. Lights
-can switch off by themselves on battery, after a period of inactivity, or while
-the keyboard is detached, and your colours come back when the condition clears.
+rainbow or strobe, with colour, speed and brightness, and a live preview. Each
+zone can switch itself off on battery, after a period of inactivity, or while
+the keyboard is detached, with its own rules for the keyboard and the lightbar,
+and your colours come back when the condition clears.
 
 ### System
 
@@ -167,6 +168,7 @@ after resume.
   boost, kept in force even when the desktop rewrites them.
 * NPU power and load on the Overview.
 * Uninstall from inside the app (System → Remove), with one password prompt.
+* Automatic switch-off rules are separate for the keyboard and the lightbar.
 * The app has the same look: an APU gauge and profile switch at the top of
   the Overview, gauge tiles everywhere, the three power limits drawn against
   the kernel's range, live fan tiles and a battery gauge, plus a status block
