@@ -52,6 +52,12 @@ red as things heat up. Below it, profile buttons, power limits and fan presets,
 lighting, battery limit, auto-switch, alerts and the panel refresh rate —
 without opening the app. It follows your accent colour and light or dark style.
 
+![Lighting in the top-bar menu](docs/screenshots/09-topbar-lighting.png)
+![Fans in the top-bar menu](docs/screenshots/10-topbar-fans.png)
+
+Each panel opens in place: lighting with a preview strip and per-zone
+switch-off rules, fans with the curve and the live temperature marked.
+
 ### KDE Plasma panel widget
 
 ![Plasma widget](docs/screenshots/08-plasma-widget.png)
@@ -103,6 +109,10 @@ Battery charge limit, automatic profile switching, boot sound, panel overdrive
 an optional drop to 60 Hz on battery), alerts when the APU stays hot, and
 export/import of your profiles and settings.
 
+**Appearance.** Light, dark or the system's scheme, and an accent colour: the
+desktop's own, one of nine, or any colour you pick. The app, the top-bar menu
+and the Plasma widget all follow it.
+
 **Tablet mode.** Pull the keyboard off and, with the option on, the desktop
 rotates and brings up the on-screen keyboard: Z13 Control reports tablet mode
 itself from whether the keyboard is attached, because the firmware's own switch
@@ -127,6 +137,7 @@ z13 fan set balanced            # fan preset or your own 8 points
 z13 light -m breathe -c cyan --color2 blue
 z13 battery 80                  # charge limit
 z13 tablet --switch on          # tablet mode when the keyboard is detached
+z13 theme --accent teal --scheme dark   # or --accent system
 z13 export my-profiles.json     # back up profiles and settings
 z13 history usage.csv           # recorded telemetry as CSV
 ```
@@ -169,6 +180,8 @@ after resume.
 * NPU power and load on the Overview.
 * Uninstall from inside the app (System → Remove), with one password prompt.
 * Automatic switch-off rules are separate for the keyboard and the lightbar.
+* Theme: light or dark scheme and an accent colour shared by the app, the
+  top-bar menu and the widget (System → Appearance, or `z13 theme`).
 * The app has the same look: an APU gauge and profile switch at the top of
   the Overview, gauge tiles everywhere, the three power limits drawn against
   the kernel's range, live fan tiles and a battery gauge, plus a status block
