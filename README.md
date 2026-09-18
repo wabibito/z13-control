@@ -85,7 +85,9 @@ so values your machine would reject are refused up front. Sustained power above
 
 ![Fans](docs/screenshots/03-fans.png)
 
-Drag the eight points, or start from Silent, Balanced or Aggressive. The curve
+Drag the eight points, or start from Silent, Balanced or Aggressive. A custom
+profile with its own power limits and no curve of its own gets the preset that
+matches those limits. The curve
 is re-applied automatically if something else drops it, the current temperature
 is marked on the graph, and at high sustained power the enforced minimum is
 drawn in orange: your points are raised to it, never lowered.
@@ -106,7 +108,7 @@ and your colours come back when the condition clears.
 
 Battery charge limit, automatic profile switching, boot sound, panel overdrive
 (remembered across reboots, optionally off on battery), panel refresh rate (with
-an optional drop to 60 Hz on battery), alerts when the APU stays hot, and
+an optional drop to 60 Hz on battery), a fix for flicker at high refresh rates, alerts when the APU stays hot, and
 export/import of your profiles and settings.
 
 **Appearance.** Light, dark or the system's scheme, and an accent colour: the
@@ -182,6 +184,20 @@ after resume.
 * Automatic switch-off rules are separate for the keyboard and the lightbar.
 * Theme: light or dark scheme and an accent colour shared by the app, the
   top-bar menu and the widget (System → Appearance, or `z13 theme`).
+* Fans and power profiles match. The fan choices are Quiet, Balanced and
+  Performance: on a power profile, its own fans are shown as the choice, and
+  picking another fan choice switches the power profile with it, rather than
+  creating a "custom" profile.
+* A switch to stop the panel flickering at 180 Hz (System → Display). It turns
+  off the display's Panel Self Refresh and Panel Replay power saving through a
+  kernel option, asks for your password, and applies at the next restart.
+* A custom profile with its own power limits but no fan curve now gets the fan
+  choice that matches those limits, instead of its base profile's fans.
+* The heat alert tells a single busy core boosting into the chip's temperature
+  ceiling apart from the whole machine running hot, and suggests the fix that
+  works for each.
+* Resetting power limits, fans or CPU settings on a firmware profile no longer
+  creates an empty "custom" profile.
 * The app has the same look: an APU gauge and profile switch at the top of
   the Overview, gauge tiles everywhere, the three power limits drawn against
   the kernel's range, live fan tiles and a battery gauge, plus a status block
