@@ -33,7 +33,10 @@ esac
 
 say "Finding the latest release…"
 RELEASE=$(curl -fsSL "$API")
-URL=$(printf '%s' "$RELEASE" | grep -o "https://[^\"]*\.$EXT\"" | tr -d '"' | head -1)
+# Match this package by name, not just by extension: the release also carries
+# the optional Rust service package, whose name ends in .deb too.
+URL=$(printf '%s' "$RELEASE" \
+    | grep -o "https://[^\"]*/z13-control[-_][0-9][^\"]*\.$EXT\"" | tr -d '"' | head -1)
 LATEST=$(printf '%s' "$RELEASE" | sed -n 's/.*"tag_name": *"v\{0,1\}\([^"]*\)".*/\1/p' | head -1)
 [ -n "$URL" ] || die "no .$EXT package in the latest release"
 if [ -n "$CURRENT" ]; then
