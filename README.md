@@ -33,23 +33,23 @@ sudo pacman -U ./z13-control-*-any.pkg.tar.zst        # Arch / CachyOS / Endeavo
 menu at login; the app enables it for you. On KDE Plasma the app adds its
 widget to your panel the first time it starts.
 
-### The service in Rust, optional
+### The service in Rust
 
-The same system service, rewritten as a single binary with no runtime
-dependencies. It costs about 4 MB of memory instead of 34 MB, and serves the
-identical D-Bus interface, so the app, the GNOME menu, the Plasma widget and
-`z13` all keep working against it without knowing the difference.
+The same application, with the system service built in Rust instead of Python:
+one binary with no interpreter behind it, about 4 MB of memory against 34. The
+app, the top-bar menu, the Plasma widget and `z13` are identical, because they
+only ever talk to the service over D-Bus.
 
-Install it *after* the package above; it takes that service's place and gives
-it back when removed. Everything else stays where it is.
+It is a whole package, not an add-on. Install one or the other:
 
 ```sh
-sudo apt install ./z13-control-rs_*_amd64.deb         # run the Rust service
-sudo apt remove z13-control-rs                        # go back to the original
+sudo apt install ./z13-control_*_all.deb              # the Python service
+sudo apt install ./z13-control-rs_*_amd64.deb         # the Rust service
 ```
 
-Debian and Ubuntu only for now, and `amd64`, which is what the machine is.
-It brings its own copy of the command as `z13-rs`, so both are available.
+apt swaps one for the other, and your profiles and settings carry over
+untouched. Updates stay on whichever you chose. Debian and Ubuntu on x86_64
+for now; the Python package is the one for everything else.
 
 ## What it does
 
