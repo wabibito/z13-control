@@ -43,13 +43,17 @@ only ever talk to the service over D-Bus.
 It is a whole package, not an add-on. Install one or the other:
 
 ```sh
-sudo apt install ./z13-control_*_all.deb              # the Python service
-sudo apt install ./z13-control-rs_*_amd64.deb         # the Rust service
+sudo apt install ./z13-control-rs_*_amd64.deb            # Ubuntu / Debian
+sudo dnf install ./z13-control-rs-*.x86_64.rpm           # Fedora / RHEL
+sudo pacman -U ./z13-control-rs-*-x86_64.pkg.tar.zst     # Arch / CachyOS
 ```
 
-apt swaps one for the other, and your profiles and settings carry over
-untouched. Updates stay on whichever you chose. Debian and Ubuntu on x86_64
-for now; the Python package is the one for everything else.
+Your package manager swaps one flavour for the other, and your profiles and
+settings carry over untouched. Updates stay on whichever you chose.
+
+The Rust service is a compiled binary, so it is x86_64 only and needs glibc
+2.39 or newer - Ubuntu 24.04, Fedora 42 and current Arch all qualify. The
+Python packages have no such limit.
 
 ## What it does
 
