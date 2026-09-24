@@ -33,14 +33,29 @@ sudo pacman -U ./z13-control-*-any.pkg.tar.zst        # Arch / CachyOS / Endeavo
 menu at login; the app enables it for you. On KDE Plasma the app adds its
 widget to your panel the first time it starts.
 
-### The service in Rust
+### Two versions: pick one
 
-The same application, with the system service built in Rust instead of Python:
-one binary with no interpreter behind it, about 4 MB of memory against 34. The
-app, the top-bar menu, the Plasma widget and `z13` are identical, because they
-only ever talk to the service over D-Bus.
+Everything you see and use is the same in both — the app, the GNOME top-bar
+menu, the KDE Plasma widget, the `z13` command. They differ in one file: the
+background service that holds the privileges and talks to the hardware.
 
-It is a whole package, not an add-on. Install one or the other:
+| | **z13-control** | **z13-control-rs** |
+|---|---|---|
+| Service written in | Python | Rust |
+| At rest | ~34 MB, one interpreter | **~4 MB, one binary** |
+| Needs | Python 3, PyGObject | the C library, nothing else |
+| Runs on | any CPU your distribution supports | x86_64, glibc 2.39 or newer |
+| Packages | `.deb`, `.rpm`, `.pkg.tar.zst` | `.deb`, `.rpm`, `.pkg.tar.zst` |
+
+**Choose `z13-control`** if you want the version that runs anywhere, or you are
+on a 32-bit or ARM system, or an older distribution. It is the default and what
+the one-line installer fetches.
+
+**Choose `z13-control-rs`** if you would rather the thing running all day were
+a small compiled binary than an interpreter. It does the same work in about a
+tenth of the memory and a fraction of the processor time.
+
+Install either directly:
 
 ```sh
 sudo apt install ./z13-control-rs_*_amd64.deb            # Ubuntu / Debian
@@ -48,12 +63,11 @@ sudo dnf install ./z13-control-rs-*.x86_64.rpm           # Fedora / RHEL
 sudo pacman -U ./z13-control-rs-*-x86_64.pkg.tar.zst     # Arch / CachyOS
 ```
 
-Your package manager swaps one flavour for the other, and your profiles and
-settings carry over untouched. Updates stay on whichever you chose.
+They replace one another, so switching is a single command and your profiles,
+fan curves and settings carry across untouched. The app tells you which one is
+running, under System:
 
-The Rust service is a compiled binary, so it is x86_64 only and needs glibc
-2.39 or newer - Ubuntu 24.04, Fedora 42 and current Arch all qualify. The
-Python packages have no such limit.
+![What this machine supports](docs/screenshots/05-system-support.png)
 
 ## What it does
 
