@@ -85,8 +85,8 @@ Temperature in the top bar, and one click away, a dashboard: a ring gauge for
 the APU temperature, the active profile as a badge, and tiles with bars for CPU
 and GPU load, memory, GPU memory, fan speeds and battery that turn amber and
 red as things heat up. Below it, profile buttons, power limits and fan presets,
-lighting, battery limit, auto-switch, alerts and the panel refresh rate —
-without opening the app. It follows your accent colour and light or dark style.
+lighting, battery limit, the touchpad, sleep, auto-switch, alerts and the panel
+refresh rate — without opening the app. It follows your accent colour and light or dark style.
 
 ![Lighting in the top-bar menu](docs/screenshots/09-topbar-lighting.png)
 ![Fans in the top-bar menu](docs/screenshots/10-topbar-fans.png)
@@ -157,6 +157,16 @@ itself from whether the keyboard is attached, because the firmware's own switch
 is unreliable. The keyboard's touchpad can be switched off if its cursor jumps,
 and that choice survives reattaching it.
 
+**Touchpad and mouse.** Optionally, the keyboard's touchpad turns off while a
+Bluetooth or USB mouse is connected and comes back when the mouse disconnects
+or sleeps. The keyboard's own built-in pointer does not count as a mouse.
+
+**Sleep.** Keep the computer awake with one switch, or choose when the screen
+blanks and when the computer sleeps, plugged in and on battery. These are the
+desktop's own settings — GNOME Settings › Power, or Power Management on Plasma —
+so the app, the menu, the widget and the desktop always show the same thing.
+Switching *Keep awake* off puts back what it changed.
+
 ### Staying up to date
 
 The app checks for new releases once a day and can install them for you:
@@ -175,6 +185,8 @@ z13 fan set balanced            # fan preset or your own 8 points
 z13 light -m breathe -c cyan --color2 blue
 z13 battery 80                  # charge limit
 z13 tablet --switch on          # tablet mode when the keyboard is detached
+z13 tablet --mouse off          # touchpad off while a mouse is connected
+z13 sleep --keep-awake on       # or --blank 5m, --ac never, --battery 15m
 z13 theme --accent teal --scheme dark   # or --accent system
 z13 export my-profiles.json     # back up profiles and settings
 z13 history usage.csv           # recorded telemetry as CSV
@@ -206,6 +218,24 @@ after resume.
   power range this app uses
 
 ## What's new
+
+**0.1.2**
+
+* A second version with the system service written in Rust: the same app,
+  menu and widget, with a service using about 4 MB of memory instead of 34.
+  See *Two versions* above; updates stay on whichever you installed.
+* The keyboard touchpad can turn off while a mouse is connected.
+* Sleep settings and a *Keep awake* switch, in the app, the top-bar menu, the
+  Plasma widget and as `z13 sleep`.
+* The touchpad has its own section in the top-bar menu and the Plasma widget,
+  and fans have a proper computer-fan icon.
+* Importing profiles that raise sustained power above 75 W now asks for the
+  administrator password, as setting it directly always did.
+* The flicker fix can write the boot configuration it manages; before, the
+  service's sandbox stopped it.
+* Uninstalling from the app works for the Rust version, and *Also delete saved
+  profiles and settings* deletes them again.
+* On the Rust version, every control in the Plasma widget works.
 
 **0.1.1**
 
