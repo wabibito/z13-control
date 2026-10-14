@@ -12,8 +12,8 @@ privileges so nothing else has to.
 
 ## Install
 
-One line, on Ubuntu 24.04+, Fedora 42+, or Arch-based systems such as
-CachyOS (GNOME or KDE Plasma 6):
+One line, on Ubuntu 26.04 (built and tested on 26.04.1), Fedora 42+, or
+Arch-based systems such as CachyOS (GNOME or KDE Plasma 6):
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/wabibito/z13-control/main/install.sh | sh
@@ -71,11 +71,26 @@ running, under System:
 
 ## What it does
 
-### Live monitoring
+### An Overview you arrange yourself
 
-APU temperature and power, CPU and GPU load, RAM and GPU memory, NPU power, fan
-speeds and battery, each with a two-minute graph that is already filled in when you open
-the app, because the service records it continuously.
+Pick the tiles you want and **drag them into your own order**, or use
+**Customize** to switch tiles and cards on and off and give them your own
+names. Twenty-six kinds of tile, for the whole machine or one device: CPU and
+APU temperature, power, fans and battery, CPU load, clock and a per-core strip,
+GPU load, clock, temperature and power, memory and GPU memory, memory clock and
+bandwidth, throttling, the NPU, network and disk throughput, the video engine
+and pressure stall; plus cards for the programs using the GPU and the other
+sensors (SSD, Wi-Fi). Each tile has a two-minute graph that is already filled
+in when you open the app, because the service records it continuously. **The
+top-bar menu and the Plasma widget show the same layout.**
+
+### Every GPU, and local AI
+
+The APU's own Radeon and any AMD or NVIDIA GPU you add over USB4 each get their
+own tiles (NVIDIA through `nvidia-smi`), and you can rename them. For running
+models on the APU's shared memory: **room for models** (how much more the GPU
+can take now), GPU memory split between the dedicated carve-out and the shared
+pool, memory bandwidth, and **which programs hold GPU memory**.
 
 ### Top-bar menu
 
@@ -181,6 +196,11 @@ z13 monitor                     # live temperature / power / fans
 z13 use performance             # switch profile
 z13 tdp 65 80 90                # power limits in watts
 z13 cpu --epp power --boost off # CPU energy preference and boost
+z13 cpu --max-mhz 3500          # cap the CPU clock (cooler, quieter)
+z13 gpu low                     # GPU clock policy: auto, low, high
+z13 ai                          # room for models, programs using the GPU
+z13 overview --add mem_bw       # change the Overview (app, menu, widget)
+z13 devices ; z13 rename gpu 1 "eGPU"
 z13 fan set balanced            # fan preset or your own 8 points
 z13 light -m breathe -c cyan --color2 blue
 z13 battery 80                  # charge limit
@@ -212,12 +232,32 @@ after resume.
 ## Requirements
 
 * 2025 ROG Flow Z13 (GZ302E)
-* Ubuntu 24.04+, Fedora 42+ or an Arch-based distribution (CachyOS,
+* Ubuntu 26.04 (built and tested on 26.04.1), Fedora 42+ or an Arch-based distribution (CachyOS,
   EndeavourOS, Manjaro), with GNOME or KDE Plasma 6 (Wayland or X11)
 * Linux 6.11+ for fan curves and power limits; 6.19+ reports the per-model
   power range this app uses
 
 ## What's new
+
+**0.1.3**
+
+* **Arrange the Overview yourself:** drag tiles into place, switch tiles and
+  cards on and off and rename them in *Customize*; the top-bar menu and the
+  Plasma widget follow the same layout (`z13 overview`).
+* **Every GPU and CPU:** an AMD or NVIDIA GPU added over USB4 gets its own
+  tiles; rename GPUs to what makes sense to you (`z13 devices`, `z13 rename`).
+* **New readings:** per-core clocks and load, the power split between CPU and
+  GPU, why the chip is being held back (throttling), memory bandwidth, the video
+  engine, network and disk throughput, pressure stall, and the SSD and Wi-Fi
+  temperatures.
+* **For local AI:** room for models, GPU memory in use, and the programs
+  holding GPU memory (`z13 ai`).
+* **Custom profiles** can cap the CPU clock and set the GPU's clock policy.
+* The low-battery warning now shows on battery: the old check took
+  *Discharging* for charging.
+* The top-bar menu scrolls when you choose more tiles than fit.
+* After updating, log out and back in once so the top-bar menu loads its new
+  version; until then the old menu keeps working.
 
 **0.1.2**
 
